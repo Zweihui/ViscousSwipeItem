@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_root"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/recycleview_item_heght"
+    android:layout_marginLeft="@dimen/recycleview_item_marginleft"
+    android:layout_marginRight="@dimen/recycleview_item_marginleft"
+    android:layout_marginTop="@dimen/recycleview_item_marginleft"
+    android:elevation="4dp"
+    >
+  <com.zwh.viscous.SwipeLayout
+      android:id="@+id/swipe"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <LinearLayout
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+      <com.zwh.viscous.ViscousView
+          android:id="@+id/visview"
+          android:layout_width="150px"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        >
+      <TextView
+          android:id="@+id/text"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+  </com.zwh.viscous.SwipeLayout>
+
+
+</FrameLayout>

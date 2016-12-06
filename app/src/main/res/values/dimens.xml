@@ -1,0 +1,10 @@
+<resources>
+  <!-- Default screen margins, per the Android Design guidelines. -->
+  <dimen name="activity_horizontal_margin">16dp</dimen>
+  <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+  <dimen name="recycleview_item_marginleft">25dp</dimen>
+  <dimen name="recycleview_item_margintop">15dp</dimen>
+  <dimen name="recycleview_item_heght">75dp</dimen>
+</resources>
