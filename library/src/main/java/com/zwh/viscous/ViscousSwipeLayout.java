@@ -1,5 +1,9 @@
 package com.zwh.viscous;
 
+/**
+ * Created by Administrator on 2018\1\26 0026.
+ */
+
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
@@ -9,12 +13,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
-/**
- * Created by RuiDu on 2015/12/20.
- */
-public class SwipeLayout extends FrameLayout {
+public class ViscousSwipeLayout extends FrameLayout {
 
     /**
      * the class which help to implement drag the item
@@ -113,12 +113,12 @@ public class SwipeLayout extends FrameLayout {
         return mState;
     }
 
-    public SwipeLayout(Context context) {
+    public ViscousSwipeLayout(Context context) {
         this(context,null);
 
     }
 
-    public SwipeLayout(Context context, AttributeSet attrs) {
+    public ViscousSwipeLayout(Context context, AttributeSet attrs) {
         this(context, attrs,0);
 
     }
@@ -130,10 +130,9 @@ public class SwipeLayout extends FrameLayout {
      * @param attrs
      * @param defStyleAttr
      */
-    public SwipeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ViscousSwipeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mViewDragHelper = ViewDragHelper.create(this, 1.0f, new SwipeCallback());
-
     }
 
 
@@ -165,6 +164,11 @@ public class SwipeLayout extends FrameLayout {
         viscousView = (ViscousView) underlyingView.getChildAt(0);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        overlapLength = underlyingView.getMeasuredWidth();
+    }
 
     /**
      * execute the smoothly slide animation and change the state
@@ -194,10 +198,10 @@ public class SwipeLayout extends FrameLayout {
         if(mOnSwipeListener!=null){
             mOnSwipeListener.onStartOpen();
         }
-        viscousView.startRefresh((-dLeft/150f));
+//        viscousView.startRefresh((-dLeft/overlapLength));
         dLeft = 0;
         if(mViewDragHelper.smoothSlideViewTo(childView, -overlapLength, 0)){
-        ViewCompat.postInvalidateOnAnimation(this);
+            ViewCompat.postInvalidateOnAnimation(this);
         }
         if(mOnSwipeListener!=null){
             mOnSwipeListener.onOpen();
@@ -246,45 +250,19 @@ public class SwipeLayout extends FrameLayout {
 
             int maxLeftLeght = overlapLength+openMargin;
             dLeft = dLeft+dx;
-            Log.d(TAG, "SwipeLayout$clampViewPositionHorizontal: "+mState.toString());
             if(dx>0){
                 if(left>0){
                     return 0;
                 }else{
                     return left;
-                    }
+                }
             }else{
                 if(left<-maxLeftLeght){
                     return -maxLeftLeght;
                 }else{
-                    viscousView.setmFraction(-0.97f*left/150);
                     return left;
                 }
             }
-            //mViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback()
-            //{
-            //    @Override
-            //    public boolean tryCaptureView(View child, int pointerId)
-            //    {
-            //        return child == childView;
-            //    }
-            //    @Override
-            //    public int getViewHorizontalDragRange(View child) {
-            //        return overlapLength;
-            //    }
-            //    @Override
-            //    public int clampViewPositionHorizontal(View child, int left, int dx)
-            //    {
-            //        dLeft = dLeft+dx;
-            //        if(dLeft>=-150)
-            //        viscousView.setmFraction(-0.97f*dLeft/150);
-            //        else
-            //            dLeft = -150;
-            //        Log.e(TAG, "SwipeLayout$clampViewPositionHorizontal: "+dLeft);
-            //        return dLeft;
-            //    }
-            //
-            //});
         }
 
 
@@ -300,23 +278,20 @@ public class SwipeLayout extends FrameLayout {
                                    float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
 
-                //to see if its a close action
-                if(releasedChild.getLeft()>-closeMargin||
-                        (xvel>0)){
-                    close();
-                }else{
-                    open();
-                }
+            //to see if its a close action
+            if(releasedChild.getLeft()>-closeMargin||
+                    (xvel>0)){
+                close();
+            }else{
+                open();
+            }
 
 
         }
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             super.onViewPositionChanged(changedView, left, top, dx, dy);
-            //dLeft = dLeft+dx;
-            //dLeft = -150;
-            //viscousView.setmFraction(-0.97f*dLeft/150);
-            //Log.e(TAG, "SwipeLayout$clampViewPositionHorizontal: "+dLeft);
+            viscousView.setmFraction(-(float) left/overlapLength, dx > 0);
         }
     }
 
@@ -411,3 +386,4 @@ public class SwipeLayout extends FrameLayout {
     }
 
 }
+

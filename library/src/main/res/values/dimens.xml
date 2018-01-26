@@ -3,4 +3,5 @@
   <dimen name="recycleview_item_marginleft">25dp</dimen>
   <dimen name="recycleview_item_margintop">15dp</dimen>
   <dimen name="recycleview_item_heght">75dp</dimen>
+  <dimen name="dimen_X_width">4dp</dimen>
 </resources>
