@@ -9,7 +9,6 @@
     android:layout_marginLeft="@dimen/recycleview_item_marginleft"
     android:layout_marginRight="@dimen/recycleview_item_marginleft"
     android:layout_marginTop="@dimen/recycleview_item_marginleft"
-    android:elevation="4dp"
     >
   <com.zwh.viscous.ViscousSwipeLayout
       android:id="@+id/swipe"
@@ -25,7 +24,7 @@
         >
       <com.zwh.viscous.ViscousView
           android:id="@+id/visview"
-          android:layout_width="70dp"
+          android:layout_width="60dp"
           android:layout_height="match_parent"
           android:gravity="center"
           />

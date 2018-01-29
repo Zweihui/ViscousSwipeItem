@@ -20,7 +20,7 @@ import android.view.animation.LinearInterpolator;
 
 public class ViscousView extends View {
     private Paint mPaint, mXPaint, mXPaint2;
-    private static final int DEFAULT_DURATION = 6600;
+    private static final int DEFAULT_DURATION = 300;
     public static final int STATE_CLOSING = 0;
     public static final int STATE_OPENING = 1;
     public static final int STATE_ANIMATING = 3;
@@ -92,9 +92,9 @@ public class ViscousView extends View {
         if (mFraction2 > 0) {
             pf6.y = mHeight / 2 * mFraction + mHeight * mFraction2;
         }
-        if (mFraction2 >= 0.5) {
-            pf1.y = mHeight * 4 / 8 * mFraction2 * 5;
-            pf4.y = mHeight * 4 / 8 * mFraction2 * 5;
+        if (mFraction2 > 0) {
+            pf1.y = mHeight * 4 / 8 * mFraction2;
+            pf4.y = mHeight * 4 / 8 * mFraction2;
         }
         mPath.reset();
         //画上方圆弧柱形 依次从 右下角(直线) -> 右上角(直线)-> 左上角(直线)-> 左下角(直线)-> 左半边贝塞尔曲线->右半边贝塞尔曲线
@@ -116,21 +116,6 @@ public class ViscousView extends View {
         mPath.quadTo(pf7.x, mHeight - pf7.y, pf1.x, mHeight - pf1.y);
         mPath.close();
         canvas.drawPath(mPath, mPaint);
-//        if (mFraction >= 0.9f) {
-//            mPaint.setColor(Color.WHITE);
-//            mPath.reset();
-//            mPath.moveTo(pf4.x, pf4.y);
-//            mPath.cubicTo(mCenterX, mCenterY,0, mCenterY/2, mCenterX, mCenterY);
-//            mPath.moveTo(pf4.x, mHeight - pf4.y);
-//            mPath.cubicTo(mCenterX, mCenterY,0, mCenterY/2, mCenterX, mCenterY);
-//            mPath.close();
-//            canvas.drawPath(mPath, mPaint);
-//            mPath.reset();
-//            mPath.moveTo(pf1.x, pf1.y);
-//            mPath.cubicTo(mCenterX, mCenterY, mCenterX, mCenterY,mWidth, mCenterY/2);
-//            mPath.cubicTo(mCenterX, mCenterY, mCenterX, mCenterY,pf1.x, mHeight - pf1.y);
-//            mPath.close();
-//            canvas.drawPath(mPath, mPaint);
 //        }
         float k = 0.4f; //控制X的粘性效果，越大越明显，不能大于1，同时太大会影响动画流畅度，推荐在0.5左右效果最佳
         if (mFraction >= 0.9) {
@@ -189,7 +174,7 @@ public class ViscousView extends View {
 
 
     public void startRefresh2() {  //粘性部分
-        valueAnimator.setDuration(800);
+        valueAnimator.setDuration(DEFAULT_DURATION);
         valueAnimator.setInterpolator(new LinearInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
